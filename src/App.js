@@ -7,7 +7,7 @@ import bg1 from './assets/bg1.jpg'
 function App() {
   return (
     <div className='App'>
-      <Header title={'Bonjour!'} descr={'guys'} />
+      <Header title='Bonjour!' descr='guys' />
       <Layout urlBg={bg1} title='This is Title' descr='This is Description' />
       <Layout colorBg title='This is Title' descr='This is Description' />
       <Layout urlBg={bg1} title='This is Title' descr='This is Description' />
