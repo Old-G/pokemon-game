@@ -1,8 +1,8 @@
 import './App.css'
-import Footer from './components/Footer/Footer'
-import Header from './components/Header/Header'
-import Layout from './components/Layout/Layout'
-import PokemonCard from './components/PokemonCard/PokemonCard'
+import Footer from './components/Footer'
+import Header from './components/Header'
+import Layout from './components/Layout'
+import PokemonCard from './components/PokemonCard'
 import bg1 from './assets/bg1.jpg'
 
 const pokemons = [
