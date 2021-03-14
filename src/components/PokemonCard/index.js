@@ -3,15 +3,15 @@ import style from './style.module.css'
 import cardBackSide from '../../assets/card-back-side.jpg'
 
 function PokemonCard({ name, img, id, type, values }) {
-  const [active, setActive] = useState(false)
+  const [isActive, setActive] = useState(false)
 
-  const onClick = () => {
-    setActive(true)
+  const onClickFace = () => {
+    setActive(!isActive)
   }
 
   return (
-    <div className={style.root} onClick={onClick}>
-      <div className={`${style.pokemonCard} ${active ? style.active : ''}`}>
+    <div className={style.root} onClick={onClickFace}>
+      <div className={`${style.pokemonCard} ${isActive ? style.active : ''}`}>
         <div className={style.cardFront}>
           <div className={`${style.wrap} ${style.front}`}>
             <div className={`${style.pokemon} ${style[type]}`}>

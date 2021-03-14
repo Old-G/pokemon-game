@@ -149,7 +149,13 @@ function App() {
       <Layout colorBg title='Cards'>
         <div className='flex'>
           {pokemons.map((item) => (
-            <PokemonCard key={item.id} {...item} />
+            <PokemonCard
+              key={item.id}
+              name={item.name}
+              img={item.img}
+              type={item.type}
+              values={item.values}
+            />
           ))}
         </div>
       </Layout>
