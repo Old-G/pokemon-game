@@ -4,7 +4,6 @@ import cn from 'classnames'
 import React from 'react'
 
 function Menu({ isActiveMenu }) {
-  // const activeDeActive = active === null ? '' : active ? s.active : s.deactive
   const activeDeActive = isActiveMenu ? s.active : s.deactive
 
   return (
