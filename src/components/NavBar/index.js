@@ -1,22 +1,19 @@
-import { useState } from 'react'
 import s from './style.module.css'
 import cn from 'classnames'
 
-function NavBar() {
-  const [isActive, setActive] = useState(false)
-
+function NavBar({ isActiveNav, onClickNav }) {
   const onClick = () => {
-    setActive(!isActive)
+    onClickNav && onClickNav()
   }
 
   return (
-    <nav className={s.root}>
-      <div className={s.navWrapper}>
-        <p className={s.brand}>LOGO</p>
+    <nav className={cn(s.root)}>
+      <div className={cn(s.navWrapper)}>
+        <p className={cn(s.brand)}>LOGO</p>
         <a
-          href='#'
+          href='/#'
           onClick={onClick}
-          className={cn(s.menuButton, { [s.active]: isActive })}
+          className={cn(s.menuButton, { [s.active]: isActiveNav })}
         >
           <span />
         </a>
