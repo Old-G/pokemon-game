@@ -6,7 +6,7 @@ function MenuHeader() {
   const [isActive, setActive] = useState(false)
 
   const handleClickMenu = () => {
-    setActive(prev => !prev)
+    setActive((prev) => !prev)
   }
 
   return (
