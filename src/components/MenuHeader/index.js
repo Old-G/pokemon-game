@@ -2,8 +2,8 @@ import { useState } from 'react'
 import Menu from '../Menu'
 import NavBar from '../NavBar'
 
-function MenuHeader() {
-  const [isActive, setActive] = useState(false)
+function MenuHeader({ bgActive }) {
+  const [isActive, setActive] = useState(null)
 
   const handleClickMenu = () => {
     setActive((prev) => !prev)
@@ -12,7 +12,11 @@ function MenuHeader() {
   return (
     <>
       <Menu isActiveMenu={isActive} />
-      <NavBar isActiveNav={isActive} onClickNav={handleClickMenu} />
+      <NavBar
+        isActiveNav={isActive}
+        onClickNav={handleClickMenu}
+        bgActive={bgActive}
+      />
     </>
   )
 }

@@ -1,8 +1,8 @@
 import s from './style.module.css'
 
 function GamePage({ onChangePage }) {
-  const onClickBack = () => {
-    onChangePage && onChangePage('app')
+  const onClickBack = (page) => {
+    onChangePage && onChangePage(page)
   }
 
   return (
