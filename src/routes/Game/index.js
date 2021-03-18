@@ -130,22 +130,33 @@ const POKEMONS = [
 function GamePage() {
   const history = useHistory()
   const [pokemons, setPokemons] = useState(POKEMONS)
-
-  const [isActive, setActive] = useState(false)
+  // const [isActive, setActive] = useState(false)
 
   const onClickBack = () => {
     history.push('/')
   }
 
-  const onClickCard = () => {
-    setActive(!isActive)
-    const newArr = pokemons.map(function (current) {
-      const card = Object.assign({}, current)
-      card.active = true
-      return card
+  // const onClickCard = (id) => {
+  //   setActive(!isActive)
+  //   const newArr = pokemons.map(function (current) {
+  //     const card = Object.assign({}, current)
+  //     card.active = true
+  //     return card
+  //   })
+  //   setPokemons(newArr)
+  //   console.log(newArr)
+  // }
+
+  const onClickCard = (id) => {
+    setPokemons((prevState) => {
+      prevState.map((item) => {
+        if (item.id === id) {
+          item.active = true
+        }
+        return item
+      })
+      return [...prevState]
     })
-    setPokemons(newArr)
-    console.log(newArr)
   }
 
   return (
@@ -158,12 +169,13 @@ function GamePage() {
           {pokemons.map((item) => (
             <PokemonCard
               key={item.id}
+              id={item.id}
               name={item.name}
               img={item.img}
               type={item.type}
               values={item.values}
               onClickCard={onClickCard}
-              isActive={isActive}
+              isActive={!!item.active}
             />
           ))}
         </div>
