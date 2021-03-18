@@ -1,10 +1,4 @@
-import { useState } from 'react'
-import { useHistory } from 'react-router-dom'
-import Layout from '../../components/Layout'
-import PokemonCard from '../../components/PokemonCard'
-import s from './style.module.css'
-
-const POKEMONS = [
+export const POKEMONS = [
   {
     abilities: ['keen-eye', 'tangled-feet', 'big-pecks'],
     stats: {
@@ -126,48 +120,3 @@ const POKEMONS = [
     },
   },
 ]
-
-function GamePage({ isActive }) {
-  const history = useHistory()
-  const [pokemons, setPokemons] = useState(JSON.parse(JSON.stringify(POKEMONS)))
-
-  const onClickBack = () => {
-    history.push('/')
-  }
-
-  const onClickCard = (id) => {
-    const newArray = POKEMONS
-    newArray.map((item) => {
-      if (item.id === id) {
-        item.active = !item.active
-      }
-    })
-    setPokemons(newArray)
-    console.log(newArray)
-    console.log(POKEMONS)
-  }
-
-  return (
-    <>
-      <h1>Game</h1>
-      <button onClick={onClickBack}>GO TO HOME</button>
-
-      <Layout colorBg title='Cards'>
-        <div className={s.flex} onClick={onClickCard}>
-          {POKEMONS.map((item) => (
-            <PokemonCard
-              key={item.id}
-              name={item.name}
-              img={item.img}
-              type={item.type}
-              values={item.values}
-              active={item.isActive}
-            />
-          ))}
-        </div>
-      </Layout>
-    </>
-  )
-}
-
-export default GamePage

@@ -3,7 +3,7 @@ import Menu from '../Menu'
 import NavBar from '../NavBar'
 
 function MenuHeader({ bgActive }) {
-  const [isActive, setActive] = useState(null)
+  const [isActive, setActive] = useState(false)
 
   const handleClickMenu = () => {
     setActive((prev) => !prev)
@@ -11,7 +11,7 @@ function MenuHeader({ bgActive }) {
 
   return (
     <>
-      <Menu isActiveMenu={isActive} />
+      <Menu isActiveMenu={isActive} onClickNav={handleClickMenu} />
       <NavBar
         isActiveNav={isActive}
         onClickNav={handleClickMenu}

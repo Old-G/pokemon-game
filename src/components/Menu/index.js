@@ -2,27 +2,32 @@ import s from './style.module.css'
 import cn from 'classnames'
 
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const MENU = [
   {
     title: 'HOME',
-    to: '#welcome',
+    to: '/',
   },
   {
     title: 'GAME',
-    to: '#game',
+    to: 'game',
   },
   {
     title: 'ABOUT',
-    to: '#about',
+    to: 'about',
   },
   {
     title: 'CONTACT',
-    to: '#contact',
+    to: 'contact',
   },
 ]
 
-function Menu({ isActiveMenu }) {
+function Menu({ isActiveMenu, onClickNav }) {
+  const onClickLink = () => {
+    onClickNav && onClickNav(!isActiveMenu)
+  }
+
   return (
     <div
       className={cn(s.menuContainer, {
@@ -35,7 +40,9 @@ function Menu({ isActiveMenu }) {
         <ul>
           {MENU.map(({ title, to }, index) => (
             <li key={index}>
-              <a href={to}>{title}</a>
+              <Link to={to} onClick={onClickLink}>
+                {title}
+              </Link>
             </li>
           ))}
         </ul>
