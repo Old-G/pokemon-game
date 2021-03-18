@@ -127,24 +127,25 @@ const POKEMONS = [
   },
 ]
 
-function GamePage({ isActive }) {
+function GamePage() {
   const history = useHistory()
-  const [pokemons, setPokemons] = useState(JSON.parse(JSON.stringify(POKEMONS)))
+  const [pokemons, setPokemons] = useState(POKEMONS)
+
+  const [isActive, setActive] = useState(false)
 
   const onClickBack = () => {
     history.push('/')
   }
 
-  const onClickCard = (id) => {
-    const newArray = POKEMONS
-    newArray.map((item) => {
-      if (item.id === id) {
-        item.active = !item.active
-      }
+  const onClickCard = () => {
+    setActive(!isActive)
+    const newArr = pokemons.map(function (current) {
+      const card = Object.assign({}, current)
+      card.active = true
+      return card
     })
-    setPokemons(newArray)
-    console.log(newArray)
-    console.log(POKEMONS)
+    setPokemons(newArr)
+    console.log(newArr)
   }
 
   return (
@@ -153,15 +154,16 @@ function GamePage({ isActive }) {
       <button onClick={onClickBack}>GO TO HOME</button>
 
       <Layout colorBg title='Cards'>
-        <div className={s.flex} onClick={onClickCard}>
-          {POKEMONS.map((item) => (
+        <div className={s.flex}>
+          {pokemons.map((item) => (
             <PokemonCard
               key={item.id}
               name={item.name}
               img={item.img}
               type={item.type}
               values={item.values}
-              active={item.isActive}
+              onClickCard={onClickCard}
+              isActive={isActive}
             />
           ))}
         </div>
