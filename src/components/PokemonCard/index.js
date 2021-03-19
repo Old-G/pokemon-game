@@ -2,15 +2,7 @@ import style from './style.module.css'
 import cn from 'classnames'
 import cardBackSide from '../../assets/card-back-side.jpg'
 
-function PokemonCard({
-  name,
-  img,
-  id,
-  type,
-  values,
-  isActive = false,
-  onClickCard,
-}) {
+function PokemonCard({ name, img, id, type, values, isActive, onClickCard }) {
   const onClickFace = () => {
     onClickCard && onClickCard(id)
   }

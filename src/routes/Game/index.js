@@ -149,13 +149,12 @@ function GamePage() {
 
   const onClickCard = (id) => {
     setPokemons((prevState) => {
-      prevState.map((item) => {
+      return Array.from(prevState, (item) => {
         if (item.id === id) {
           item.active = true
         }
         return item
       })
-      return [...prevState]
     })
   }
 
@@ -166,18 +165,20 @@ function GamePage() {
 
       <Layout colorBg title='Cards'>
         <div className={s.flex}>
-          {pokemons.map((item) => (
-            <PokemonCard
-              key={item.id}
-              id={item.id}
-              name={item.name}
-              img={item.img}
-              type={item.type}
-              values={item.values}
-              onClickCard={onClickCard}
-              isActive={!!item.active}
-            />
-          ))}
+          {Object.entries(pokemons).map(
+            ([key, { id, name, img, type, values, active }]) => (
+              <PokemonCard
+                key={id}
+                id={id}
+                name={name}
+                img={img}
+                type={type}
+                values={values}
+                onClickCard={onClickCard}
+                isActive={active}
+              />
+            )
+          )}
         </div>
       </Layout>
     </>
