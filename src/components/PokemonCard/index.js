@@ -3,12 +3,13 @@ import cn from 'classnames'
 import cardBackSide from '../../assets/card-back-side.jpg'
 
 function PokemonCard({
+  key,
   name,
   img,
   id,
   type,
   values,
-  isActive = false,
+  isActive,
   onClickCard,
 }) {
   const onClickFace = () => {

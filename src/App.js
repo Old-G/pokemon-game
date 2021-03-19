@@ -8,7 +8,11 @@ import NotFoundPage from './routes/NotFound'
 import MenuHeader from './components/MenuHeader'
 import Footer from './components/Footer'
 
+import database from './service/firebase'
+
 import s from './style.module.css'
+
+
 
 const App = () => {
   const match = useRouteMatch('/')
