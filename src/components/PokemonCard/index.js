@@ -3,7 +3,6 @@ import cn from 'classnames'
 import cardBackSide from '../../assets/card-back-side.jpg'
 
 function PokemonCard({
-  newKey,
   name,
   img,
   id,
@@ -13,7 +12,7 @@ function PokemonCard({
   onClickCard,
 }) {
   const onClickFace = () => {
-    onClickCard && onClickCard(newKey)
+    onClickCard && onClickCard(id)
   }
 
   return (
