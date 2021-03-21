@@ -52,22 +52,21 @@ function GamePage() {
     console.log(onClickAdd)
   }
 
-  //
-
   const onClickCard = (newKey) => {
-    setPokemons((prevState) => {
-      return Object.entries(prevState).reduce((acc, [key, item]) => {
-        const pokemon = { ...item }
-        if (key === newKey) {
-          pokemon.active = true
-          database.ref('pokemons/' + key).update({ active: true })
-        }
+    database
+      .ref('pokemons/' + newKey)
+      .update({ active: true })
+      .then(
+        setPokemons((prevState) => {
+          return Object.entries(prevState).reduce((acc, [key, item]) => {
+            const pokemon = { ...item }
 
-        acc[key] = pokemon
+            acc[key] = key === newKey ? { ...pokemon, active: true } : pokemon
 
-        return acc
-      }, {})
-    })
+            return acc
+          }, {})
+        })
+      )
   }
 
   return (
