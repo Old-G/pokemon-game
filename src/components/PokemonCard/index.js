@@ -13,7 +13,7 @@ function PokemonCard({
   onClickCard,
 }) {
   const onClickFace = () => {
-    onClickCard && onClickCard(newKey)
+    onClickCard && onClickCard(id)
   }
 
   return (

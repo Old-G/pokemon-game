@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import PokemonCard from '../../components/PokemonCard'
 import s from './style.module.css'
 
 import database from '../../service/fairbase'
+import { FireBaseContext } from '../../context/firebaseContext'
 
-const poke = {
+const POKE = {
   abilities: ['keen-eye', 'tangled-feet', 'big-pecks'],
   base_experience: 122,
   height: 11,
@@ -30,43 +31,54 @@ const poke = {
   },
 }
 
-function GamePage() {
+const GamePage = () => {
+  const firebase = useContext(FireBaseContext)
   const [pokemons, setPokemons] = useState({})
 
   useEffect(() => {
-    database.ref('pokemons').once('value', (snapshot) => {
-      setPokemons(snapshot.val())
+    firebase.getPokemonsSocket((pokemons) => {
+      setPokemons(pokemons)
     })
   }, [])
 
   const onClickAdd = () => {
-    const newKey = database.ref().child('pokemons').push().key
-    database
-      .ref('pokemons/' + newKey)
-      .set(poke)
-      .then(() =>
-        setPokemons((prevState) => {
-          return { ...prevState, [newKey]: poke }
-        })
-      )
+    const poke = POKE
+    firebase.addPokemon(poke)
     console.log(onClickAdd)
   }
 
-  const onClickCard = (newKey) => {
-    database
-      .ref('pokemons/' + newKey)
-      .update({ active: true })
-      .then(
-        setPokemons((prevState) => {
-          return Object.entries(prevState).reduce((acc, [key, item]) => {
-            const pokemon = { ...item }
+  // const onClickCard = (newKey) => {
+  //   database
+  //     .ref('pokemons/' + newKey)
+  //     .update({ active: true })
+  //     .then(
+  //       setPokemons((prevState) => {
+  //         return Object.entries(prevState).reduce((acc, [key, item]) => {
+  //           const pokemon = { ...item }
 
-            acc[key] = key === newKey ? { ...pokemon, active: true } : pokemon
+  //           acc[key] = key === newKey ? { ...pokemon, active: true } : pokemon
 
-            return acc
-          }, {})
-        })
-      )
+  //           return acc
+  //         }, {})
+  //       })
+  //     )
+  // }
+
+  const onClickCard = (id) => {
+    setPokemons((prevState) => {
+      return Object.entries(prevState).reduce((acc, item) => {
+        const pokemon = { ...item[1] }
+        if (pokemon.id === id) {
+          pokemon.active = !pokemon.active
+        }
+
+        acc[item[0]] = pokemon
+
+        firebase.postPokemon(item[0], pokemon)
+
+        return acc
+      }, {})
+    })
   }
 
   return (
