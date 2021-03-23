@@ -6,32 +6,6 @@ import s from './style.module.css'
 import { FireBaseContext } from '../../../../context/firebaseContext'
 import { PokemonContext } from '../../../../context/pokemonContext'
 
-const POKE = {
-  abilities: ['keen-eye', 'tangled-feet', 'big-pecks'],
-  base_experience: 122,
-  height: 11,
-  weight: 300,
-  id: 17,
-  img:
-    'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/17.png',
-  name: 'pidgeotto',
-  stats: {
-    hp: 63,
-    attack: 60,
-    defense: 55,
-    'special-attack': 50,
-    'special-defense': 50,
-    speed: 71,
-  },
-  type: 'normal',
-  values: {
-    top: 7,
-    right: 5,
-    bottom: 1,
-    left: 2,
-  },
-}
-
 const StartPage = () => {
   const history = useHistory()
   const firebase = useContext(FireBaseContext)
@@ -44,95 +18,64 @@ const StartPage = () => {
     firebase.getPokemonsSocket((pokemons) => {
       setPokemons(pokemons)
     })
+
+    return () => firebase.offPokemonsSocket()
   }, [])
 
-  // const onClickAdd = () => {
-  //   const poke = POKE
-  //   firebase.addPokemon(poke)
+  const onClickCard = (key) => {
+    const pokemon = { ...pokemons[key] }
+    pokemonContext.onChangePokemon(key, pokemon)
 
-  //   console.log(onClickAdd)
-  // }
+    setPokemons((prevState) => ({
+      ...prevState,
+      [key]: {
+        ...prevState[key],
+        selected: !prevState[key].selected,
+      },
+    }))
+  }
 
-  const onClickStart = () => {}
-
-  const onSelected = () => {
-    const selectedPokemons = []
-    Object.entries(pokemons).forEach(([key, item]) => {
-      if (!!item.selected) {
-        selectedPokemons[key] = item
-      }
-    })
-    if (!Object.keys(selectedPokemons).length) {
-      return
-    }
-    pokemonContext.onChangePokemon(selectedPokemons)
-
+  const onClickGameStart = () => {
     history.push('/game/board')
   }
 
-  const onClickCard = (id) => {
-    setPokemons((prevState) => {
-      return Object.entries(prevState).reduce((acc, item) => {
-        const pokemon = { ...item[1] }
-        if (pokemon.id === id) {
-          pokemon.active = !pokemon.active
-        }
-
-        acc[item[0]] = pokemon
-
-        firebase.postPokemon(item[0], pokemon)
-
-        return acc
-      }, {})
-    })
-  }
-
-  // const onClickCard = (newKey) => {
-  //   database
-  //     .ref('pokemons/' + newKey)
-  //     .update({ active: true })
-  //     .then(
-  //       setPokemons((prevState) => {
-  //         return Object.entries(prevState).reduce((acc, [key, item]) => {
-  //           const pokemon = { ...item }
-
-  //           acc[key] = key === newKey ? { ...pokemon, active: true } : pokemon
-
-  //           return acc
-  //         }, {})
-  //       })
-  //     )
-  // }
-
   return (
-    <div className={s.container}>
-      <button onClick={onSelected}>Start Game</button>
+    <>
+      <div className={s.buttonWrap}>
+        <button
+          onClick={onClickGameStart}
+          disabled={Object.keys(pokemonContext.pokemons).length < 5}
+        >
+          Start Game
+        </button>
+      </div>
+
       <div className={s.flex}>
         {Object.entries(pokemons).map(
-          ([key, { id, name, img, type, values, active }]) => (
-            <div
+          ([key, { id, name, img, type, values, selected }]) => (
+            <PokemonCard
+              className={s.card}
               key={key}
-              className={s.root}
-              onClick={() => {
-                onClickCard(key)
+              id={id}
+              name={name}
+              img={img}
+              type={type}
+              values={values}
+              isActive={true}
+              isSelected={selected}
+              onClickCard={() => {
+                if (
+                  Object.keys(pokemonContext.pokemons).length < 5 ||
+                  selected
+                ) {
+                  onClickCard(key)
+                }
               }}
-            >
-              <PokemonCard
-                key={key}
-                newKey={key}
-                id={id}
-                name={name}
-                img={img}
-                type={type}
-                values={values}
-                // onClickCard={onClickCard}
-                isActive={active}
-              />
-            </div>
+            />
           )
         )}
       </div>
-    </div>
+    </>
   )
 }
 

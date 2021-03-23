@@ -1,15 +1,8 @@
-.root {
-  width: 268px;
-  height: 388px;
-  margin: 16px;
-  perspective: 1000px;
-}
 
 .flex {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 40px;
 }
 
 .container {
@@ -18,8 +11,14 @@
   align-items: center;
 }
 
+.buttonWrap {
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 50px;
+
+}
+
 button {
-  margin: 30px auto;
 }
 
 button,
@@ -74,4 +73,10 @@ button:disabled:hover {
   background: #f300b4;
   border: 1px solid transparent;
   color: #fafafa;
+}
+
+.card {
+  width: 100%;
+  height: 380px;
+  cursor: pointer;
 }

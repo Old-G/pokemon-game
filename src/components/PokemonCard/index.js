@@ -8,10 +8,11 @@ function PokemonCard({
   id,
   type,
   values,
-  isActive = true,
+  isActive,
   onClickCard,
   minimize,
   className,
+  isSelected,
 }) {
   const onClickFace = () => {
     onClickCard && onClickCard(id)
@@ -19,7 +20,10 @@ function PokemonCard({
 
   return (
     <div
-      className={cn(className, s.pokemonCard, { [s.active]: isActive })}
+      className={cn(className, s.pokemonCard, {
+        [s.active]: isActive,
+        [s.selected]: isSelected,
+      })}
       onClick={onClickFace}
     >
       <div className={s.cardFront}>
@@ -49,7 +53,7 @@ function PokemonCard({
 
       <div className={s.cardBack}>
         <div className={cn(s.wrap, s.back)} />
-        <img src={cardBackSide} alt='Сard Backed' />
+        {/* <img src={cardBackSide} alt='Сard Backed' /> */}
       </div>
     </div>
   )

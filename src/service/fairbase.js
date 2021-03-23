@@ -24,6 +24,10 @@ class Firebase {
     })
   }
 
+  offPokemonsSocket = () => {
+    this.database.ref('pokemons').off()
+  }
+
   getPokemonsOnce = async () => {
     return await this.database
       .ref('pokemons')
@@ -40,7 +44,7 @@ class Firebase {
     this.database
       .ref('pokemons/' + newKey)
       .set(poke)
-      .then(callback)
+      .then(() => callback())
   }
 }
 
