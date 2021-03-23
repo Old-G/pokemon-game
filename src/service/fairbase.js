@@ -10,10 +10,10 @@ const firebaseConfig = {
   messagingSenderId: '52025650877',
   appId: '1:52025650877:web:4580323ac8699b598051d4',
 }
+
+firebase.initializeApp(firebaseConfig)
 class Firebase {
   constructor() {
-    firebase.initializeApp(firebaseConfig)
-
     this.fire = firebase
     this.database = this.fire.database()
   }
@@ -40,7 +40,7 @@ class Firebase {
     this.database
       .ref('pokemons/' + newKey)
       .set(poke)
-      .then(() => callback())
+      .then(callback)
   }
 }
 
