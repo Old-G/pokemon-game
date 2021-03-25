@@ -25,8 +25,8 @@ const StartPage = () => {
         }, {})
       )
     })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     return () => firebase.offPokemonsSocket()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [firebase])
 
   const onClickCard = (key) => {
