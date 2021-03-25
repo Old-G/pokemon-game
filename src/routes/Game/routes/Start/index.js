@@ -15,15 +15,29 @@ const StartPage = () => {
   const [pokemons, setPokemons] = useState({})
 
   useEffect(() => {
+    pokemonContext.setCurrentPlayer(0)
     firebase.getPokemonsSocket((pokemons) => {
-      setPokemons(pokemons)
+      setPokemons(
+        Object.entries(pokemons).reduce((acc, [key, item]) => {
+          acc[key] = { ...item, selected: !!pokemonContext.pokemons[key] }
+
+          return acc
+        }, {})
+      )
     })
 
     return () => firebase.offPokemonsSocket()
-  }, [])
+  }, [firebase])
 
   const onClickCard = (key) => {
     const pokemon = { ...pokemons[key] }
+    if (
+      Object.keys(pokemonContext.pokemons).length >= 5 &&
+      !(pokemon.selected === true)
+    ) {
+      return
+    }
+
     pokemonContext.onChangePokemon(key, pokemon)
 
     setPokemons((prevState) => ({
@@ -44,7 +58,7 @@ const StartPage = () => {
       <div className={s.buttonWrap}>
         <button
           onClick={onClickGameStart}
-          disabled={Object.keys(pokemonContext.pokemons).length < 5}
+          disabled={Object.keys(pokemonContext.pokemons).length !== 5}
         >
           Start Game
         </button>
