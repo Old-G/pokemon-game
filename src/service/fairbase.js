@@ -35,8 +35,21 @@ class Firebase {
       .then((spanpshot) => spanpshot.val())
   }
 
+  getOnePokemon = async (id) => {
+    return await this.database
+      .ref('pokemons')
+      .orderByChild('id')
+      .equalTo(id)
+      .once('value')
+      .then((snapshot) => snapshot.val())
+  }
+
   postPokemon = (key, pokemon) => {
     this.database.ref(`pokemons/${key}`).set(pokemon)
+  }
+
+  updatePokemon = (key, update, callback) => {
+    this.database.ref(`pokemons/${key}`).update(update).then(callback)
   }
 
   addPokemon = (poke, callback) => {
@@ -48,4 +61,6 @@ class Firebase {
   }
 }
 
-export default Firebase
+const FirebaseClass = new Firebase()
+
+export default FirebaseClass

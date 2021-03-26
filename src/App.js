@@ -11,7 +11,7 @@ import Footer from './components/Footer'
 import { FireBaseContext } from './context/firebaseContext'
 
 import s from './style.module.css'
-import Firebase from './service/fairbase'
+import FirebaseClass from './service/fairbase'
 
 const App = () => {
   const location = useLocation('/')
@@ -19,7 +19,7 @@ const App = () => {
     location.pathname === '/' || location.pathname === '/game/board'
 
   return (
-    <FireBaseContext.Provider value={new Firebase()}>
+    <FireBaseContext.Provider value={FirebaseClass}>
       <Switch>
         <Route path='/404' component={NotFoundPage} />
         <Route>

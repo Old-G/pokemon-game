@@ -6,8 +6,11 @@ import FinishPage from './routes/Finish'
 import { PokemonContext } from '../../context/pokemonContext'
 
 const GamePage = () => {
-  const [selectedPokemon, setSelectedPokemon] = useState({})
   const match = useRouteMatch()
+  const [selectedPokemon, setSelectedPokemon] = useState([])
+  const [opponentPokemons, setOpponentPokemons] = useState([])
+  const [gameResult, setGameResult] = useState(null)
+  const [currentPlayer, setCurrentPlayer] = useState(0)
 
   const onChangePokemon = (key, pokemon) => {
     setSelectedPokemon((prevState) => {
@@ -24,11 +27,33 @@ const GamePage = () => {
     })
   }
 
+  const onClickSetOpponentPokemons = (pokemons) => {
+    setOpponentPokemons(pokemons)
+  }
+
+  const onClickSetGameResult = (result) => {
+    setGameResult(result)
+  }
+
+  const onClickClear = () => {
+    setSelectedPokemon([])
+    setOpponentPokemons([])
+    setGameResult(null)
+    setCurrentPlayer(0)
+  }
+
   return (
     <PokemonContext.Provider
       value={{
         pokemons: selectedPokemon,
         onChangePokemon: onChangePokemon,
+        opponentPokemons: opponentPokemons,
+        onSetOpponentPokemon: onClickSetOpponentPokemons,
+        gameResult: gameResult,
+        onSetGameResult: onClickSetGameResult,
+        onClear: onClickClear,
+        currentPlayer: currentPlayer,
+        setCurrentPlayer: setCurrentPlayer,
       }}
     >
       <Switch>
