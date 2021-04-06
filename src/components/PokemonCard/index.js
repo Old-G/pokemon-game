@@ -53,7 +53,6 @@ function PokemonCard({
 
       <div className={s.cardBack}>
         <div className={cn(s.wrap, s.back)} />
-        {/* <img src={cardBackSide} alt='Сard Backed' /> */}
       </div>
     </div>
   )

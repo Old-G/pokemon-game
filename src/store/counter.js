@@ -17,7 +17,7 @@ export const slice = createSlice({
   },
 })
 
-export const {plusAction, minusAction} = slice.actions
+export const { plusAction, minusAction } = slice.actions
 
 export const selectCount = (state) => state.counter.value
 
