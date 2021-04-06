@@ -1,15 +1,11 @@
 import { useHistory } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
 import s from './style.module.css'
 import Header from '../../components/Header'
 import Layout from '../../components/Layout'
 import bg1 from '../../assets/bg1.jpg'
-import { selectCount } from '../../store/counter'
 
 function HomePage() {
   const history = useHistory()
-  const count = useSelector(selectCount)
-  const dispatch = useDispatch()
 
   const onClickButton = () => {
     history.push('/game')
